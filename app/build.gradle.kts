@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -22,13 +24,22 @@ android {
         }
     }
 
+    android.buildFeatures.buildConfig = true
+
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.115:5002\"")
+        }
+
+        getByName("debug") {
+            isDebuggable = true
+            buildConfigField("String", "BASE_URL", "\"http://192.168.1.115:5002\"")
         }
     }
     compileOptions {
@@ -60,6 +71,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+
+    // Timber for logging
+    implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Jetpack Compose
     implementation("androidx.navigation:navigation-compose:2.7.7")
