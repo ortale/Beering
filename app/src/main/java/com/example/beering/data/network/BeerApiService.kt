@@ -1,5 +1,6 @@
-package com.example.beering.data.remote
+package com.example.beering.data.network
 
+import com.example.beering.data.dto.BeerDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 
