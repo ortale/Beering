@@ -1,7 +1,7 @@
 package com.example.beering.data.network
 
 import com.example.beering.BuildConfig
-import com.example.beering.BuildConfig.BASE_URL
+import com.example.beering.BuildConfig.API_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,7 +10,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,7 +24,7 @@ object NetworkModule {
         val client = OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor).build()
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(API_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

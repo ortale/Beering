@@ -24,6 +24,34 @@ android {
 
     android.buildFeatures.buildConfig = true
 
+    flavorDimensions += rootProject.extra["FLAVOR_DIMENSION"] as String
+    productFlavors {
+        create("dev") {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            buildConfigField("String", "API_URL", "\"${rootProject.extra["DEV_API_URL"]}\"")
+
+            manifestPlaceholders.putAll(
+                mutableMapOf(
+                    Pair("appLabel", rootProject.extra["DEV_APP_LABEL"] as String),
+                    Pair("icon", rootProject.extra["DEV_APP_ICON"] as String)
+                )
+            )
+        }
+        create("prod") {
+            applicationIdSuffix = ".prod"
+            versionNameSuffix = "-prod"
+            buildConfigField("String", "API_URL", "\"${rootProject.extra["PROD_API_URL"]}\"")
+
+            manifestPlaceholders.putAll(
+                mutableMapOf(
+                    Pair("appLabel", rootProject.extra["PROD_APP_LABEL"] as String),
+                    Pair("icon", rootProject.extra["PROD_APP_ICON"] as String)
+                )
+            )
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -32,12 +60,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"http://159.65.21.221/:5002\"")
         }
 
         getByName("debug") {
             isDebuggable = true
-            buildConfigField("String", "BASE_URL", "\"http://192.168.1.115:5002\"")
         }
     }
     compileOptions {
