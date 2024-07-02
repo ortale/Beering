@@ -48,11 +48,6 @@ class BeerViewModelTest {
         beerViewModel = BeerViewModel(getBeersUseCase, getBeerByIdUseCase)
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
     @Test
     fun `fetchBeers updates beerListState on success`() = testScope.runTest {
         // Prepare
@@ -60,13 +55,15 @@ class BeerViewModelTest {
             emit(Result.Success(testBeerList))
         })
 
-        // Execute
-        beerViewModel.fetchBeers()
+        try {
+            // Execute
+            beerViewModel.fetchBeers()
 
-        runCurrent()
-
-        // Verify
-        assertEquals(BeerListState.Success(testBeerList), beerViewModel.beerListState.value)
+            // Verify
+            assertEquals(BeerListState.Success(testBeerList), beerViewModel.beerListState.value)
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 
     @Test
@@ -77,13 +74,15 @@ class BeerViewModelTest {
             emit(Result.Failure(Exception(errorMessage)))
         })
 
-        // Execute
-        beerViewModel.fetchBeers()
+        try {
+            // Execute
+            beerViewModel.fetchBeers()
 
-        runCurrent()
-
-        // Verify
-        assertEquals(BeerListState.Error(errorMessage), beerViewModel.beerListState.value)
+            // Verify
+            assertEquals(BeerListState.Error(errorMessage), beerViewModel.beerListState.value)
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 
     @Test
@@ -93,13 +92,15 @@ class BeerViewModelTest {
             emit(Result.Success(testBeer))
         })
 
-        // Execute
-        beerViewModel.getBeerById(testBeerId)
+        try {
+            // Execute
+            beerViewModel.getBeerById(testBeerId)
 
-        runCurrent()
-
-        // Verify
-        assertEquals(BeerDetailState.Success(testBeer), beerViewModel.beerDetailState.value)
+            // Verify
+            assertEquals(BeerDetailState.Success(testBeer), beerViewModel.beerDetailState.value)
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 
     @Test
@@ -110,12 +111,14 @@ class BeerViewModelTest {
             emit(Result.Failure(Exception(errorMessage)))
         })
 
-        // Execute
-        beerViewModel.getBeerById(testBeerId)
+        try {
+            // Execute
+            beerViewModel.getBeerById(testBeerId)
 
-        runCurrent()
-
-        // Verify
-        assertEquals(BeerDetailState.Error(errorMessage), beerViewModel.beerDetailState.value)
+            // Verify
+            assertEquals(BeerDetailState.Error(errorMessage), beerViewModel.beerDetailState.value)
+        } finally {
+            Dispatchers.resetMain()
+        }
     }
 }
