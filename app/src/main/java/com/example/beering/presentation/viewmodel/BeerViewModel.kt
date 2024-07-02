@@ -1,12 +1,12 @@
-package com.example.beering.viewmodel
+package com.example.beering.presentation.viewmodel
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.beering.data.domain.Beer
-import com.example.beering.data.usecases.GetBeerByIdUseCase
-import com.example.beering.data.usecases.GetBeersUseCase
+import com.example.beering.domain.model.Beer
+import com.example.beering.domain.usecases.GetBeerByIdUseCase
+import com.example.beering.domain.usecases.GetBeersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,7 +32,9 @@ class BeerViewModel @Inject constructor(
             getBeersUseCase.execute().collect { result ->
                 _beerListState.value = when (result) {
                     is Result.Success -> BeerListState.Success(result.data)
-                    is Result.Failure -> BeerListState.Error(result.exception.message ?: "Unknown error")
+                    is Result.Failure -> BeerListState.Error(
+                        result.exception.message ?: "Unknown error"
+                    )
                 }
             }
         }
@@ -43,7 +45,9 @@ class BeerViewModel @Inject constructor(
             getBeerByIdUseCase.execute(id).collect { result ->
                 _beerDetailState.value = when (result) {
                     is Result.Success -> BeerDetailState.Success(result.data)
-                    is Result.Failure -> BeerDetailState.Error(result.exception.message ?: "Unknown error")
+                    is Result.Failure -> BeerDetailState.Error(
+                        result.exception.message ?: "Unknown error"
+                    )
                 }
             }
         }

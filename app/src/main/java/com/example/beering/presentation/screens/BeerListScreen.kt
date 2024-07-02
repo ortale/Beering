@@ -1,4 +1,4 @@
-package com.example.beering.viewmodel.screens
+package com.example.beering.presentation.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -24,9 +24,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.beering.R
-import com.example.beering.data.domain.Beer
-import com.example.beering.viewmodel.BeerListState
-import com.example.beering.viewmodel.BeerViewModel
+import com.example.beering.domain.model.Beer
+import com.example.beering.presentation.viewmodel.BeerListState
+import com.example.beering.presentation.viewmodel.BeerViewModel
 
 @Composable
 fun BeerListScreen(navController: NavController, viewModel: BeerViewModel = hiltViewModel()) {

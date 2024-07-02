@@ -1,4 +1,4 @@
-package com.example.beering.viewmodel
+package com.example.beering.presentation.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.beering.viewmodel.screens.BeerDetailScreen
-import com.example.beering.viewmodel.screens.BeerListScreen
+import com.example.beering.presentation.screens.BeerDetailScreen
+import com.example.beering.presentation.screens.BeerListScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,9 +1,10 @@
-package com.example.beering.data.repository.beer
+package com.example.beering.data.repository
 
-import com.example.beering.data.domain.Beer
+import com.example.beering.domain.model.Beer
 import com.example.beering.data.datasource.BeerDataSource
 import com.example.beering.data.dto.toDomainModel
-import com.example.beering.viewmodel.Result
+import com.example.beering.domain.repository.BeerRepository
+import com.example.beering.presentation.viewmodel.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

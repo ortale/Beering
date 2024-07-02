@@ -1,4 +1,4 @@
-package com.example.beering.data.domain
+package com.example.beering.domain.model
 
 data class Beer(
     val id: String,

@@ -1,13 +1,12 @@
-package com.example.beering.data.repository
+package com.example.beering.domain.repository
 
 import com.example.beering.data.datasource.BeerDataSource
 import com.example.beering.data.network.BeerApiService
-import com.example.beering.data.repository.beer.BeerRepository
-import com.example.beering.data.repository.beer.BeerRepositoryImpl
-import com.example.beering.data.usecases.GetBeerByIdUseCase
-import com.example.beering.data.usecases.GetBeerByIdUseCaseImpl
-import com.example.beering.data.usecases.GetBeersUseCase
-import com.example.beering.data.usecases.GetBeersUseCaseImpl
+import com.example.beering.data.repository.BeerRepositoryImpl
+import com.example.beering.domain.usecases.GetBeerByIdUseCase
+import com.example.beering.domain.usecases.GetBeerByIdUseCaseImpl
+import com.example.beering.domain.usecases.GetBeersUseCase
+import com.example.beering.domain.usecases.GetBeersUseCaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

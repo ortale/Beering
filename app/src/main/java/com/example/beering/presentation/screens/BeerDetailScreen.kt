@@ -1,4 +1,4 @@
-package com.example.beering.viewmodel.screens
+package com.example.beering.presentation.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.beering.R
-import com.example.beering.viewmodel.BeerDetailState
-import com.example.beering.viewmodel.BeerViewModel
+import com.example.beering.presentation.viewmodel.BeerDetailState
+import com.example.beering.presentation.viewmodel.BeerViewModel
 
 @Composable
 fun BeerDetailScreen(beerId: String, viewModel: BeerViewModel = hiltViewModel()) {

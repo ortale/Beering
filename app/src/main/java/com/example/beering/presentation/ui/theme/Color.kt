@@ -1,4 +1,4 @@
-package com.example.beering.ui.theme
+package com.example.beering.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
