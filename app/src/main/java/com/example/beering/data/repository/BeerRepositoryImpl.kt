@@ -22,7 +22,7 @@ class BeerRepositoryImpl(private val beerDataSource: BeerDataSource) : BeerRepos
         }
     }
 
-    override suspend fun getBeerById(id: String): Flow<Result<Beer>> {
+    override suspend fun getBeerById(id: Int): Flow<Result<Beer>> {
         return try {
             val beer = beerDataSource.getBeerById(id).toDomainModel()
             flow {

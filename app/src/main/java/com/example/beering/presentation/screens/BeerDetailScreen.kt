@@ -22,7 +22,7 @@ import com.example.beering.presentation.viewmodel.BeerDetailState
 import com.example.beering.presentation.viewmodel.BeerViewModel
 
 @Composable
-fun BeerDetailScreen(beerId: String, viewModel: BeerViewModel = hiltViewModel()) {
+fun BeerDetailScreen(beerId: Int, viewModel: BeerViewModel = hiltViewModel()) {
     LaunchedEffect(beerId) {
         viewModel.getBeerById(beerId)
     }

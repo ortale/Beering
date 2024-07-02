@@ -31,7 +31,7 @@ fun NavGraph(startDestination: String = "list") {
             BeerListScreen(navController = navController)
         }
         composable("detail/{beerId}") { backStackEntry ->
-            val beerId = backStackEntry.arguments?.getString("beerId")
+            val beerId = backStackEntry.arguments?.getString("beerId")?.toInt()
             beerId?.let { BeerDetailScreen(beerId = it) }
         }
     }

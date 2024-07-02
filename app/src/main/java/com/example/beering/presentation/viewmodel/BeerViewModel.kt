@@ -1,5 +1,6 @@
 package com.example.beering.presentation.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beering.domain.model.Beer
@@ -26,7 +27,8 @@ class BeerViewModel @Inject constructor(
         fetchBeers()
     }
 
-    private fun fetchBeers() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun fetchBeers() {
         viewModelScope.launch {
             getBeersUseCase.execute().collect { result ->
                 _beerListState.value = when (result) {
@@ -39,7 +41,7 @@ class BeerViewModel @Inject constructor(
         }
     }
 
-    fun getBeerById(id: String) {
+    fun getBeerById(id: Int) {
         viewModelScope.launch {
             getBeerByIdUseCase.execute(id).collect { result ->
                 _beerDetailState.value = when (result) {
@@ -65,7 +67,7 @@ sealed class BeerListState {
 }
 
 sealed class BeerDetailState {
-    object Loading : BeerDetailState()
+    data object Loading : BeerDetailState()
     data class Success(val beer: Beer) : BeerDetailState()
     data class Error(val message: String) : BeerDetailState()
 }

@@ -11,7 +11,7 @@ interface GetBeersUseCase {
 }
 
 interface GetBeerByIdUseCase {
-    suspend fun execute(id: String): Flow<Result<Beer>>
+    suspend fun execute(id: Int): Flow<Result<Beer>>
 }
 
 class GetBeersUseCaseImpl @Inject constructor(private val beerRepository: BeerRepository) :
@@ -23,7 +23,7 @@ class GetBeersUseCaseImpl @Inject constructor(private val beerRepository: BeerRe
 
 class GetBeerByIdUseCaseImpl @Inject constructor(private val beerRepository: BeerRepository) :
     GetBeerByIdUseCase {
-    override suspend fun execute(id: String): Flow<Result<Beer>> {
+    override suspend fun execute(id: Int): Flow<Result<Beer>> {
         return beerRepository.getBeerById(id)
     }
 }

@@ -5,5 +5,5 @@ import com.example.beering.data.network.BeerApiService
 
 class BeerDataSource(private val beerApiService: BeerApiService) {
     suspend fun getAllBeers(): List<BeerDto> = beerApiService.getAllBeers()
-    suspend fun getBeerById(id: String): BeerDto = beerApiService.getBeerById(id)
+    suspend fun getBeerById(id: Int): BeerDto = beerApiService.getBeerById(id)
 }

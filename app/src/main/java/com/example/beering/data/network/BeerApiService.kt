@@ -9,5 +9,5 @@ interface BeerApiService {
     suspend fun getAllBeers(): List<BeerDto>
 
     @GET("/api/v1/beer/{id}")
-    suspend fun getBeerById(@Path("id") id: String): BeerDto
+    suspend fun getBeerById(@Path("id") id: Int): BeerDto
 }

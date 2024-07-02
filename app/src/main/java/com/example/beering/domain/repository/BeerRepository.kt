@@ -6,5 +6,5 @@ import com.example.beering.presentation.viewmodel.Result
 
 interface BeerRepository {
     suspend fun getBeers(): Flow<Result<List<Beer>>>
-    suspend fun getBeerById(id: String): Flow<Result<Beer>>
+    suspend fun getBeerById(id: Int): Flow<Result<Beer>>
 }
