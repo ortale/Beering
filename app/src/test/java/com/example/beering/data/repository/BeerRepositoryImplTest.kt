@@ -1,10 +1,8 @@
-package com.example.beering
+package com.example.beering.data.repository
 
 import com.example.beering.data.datasource.BeerDataSource
 import com.example.beering.data.dto.BeerDto
 import com.example.beering.data.dto.toDomainModel
-import com.example.beering.data.repository.BeerRepositoryImpl
-import com.example.beering.domain.model.Beer
 import com.example.beering.domain.repository.BeerRepository
 import com.example.beering.presentation.viewmodel.Result
 import io.mockk.coEvery

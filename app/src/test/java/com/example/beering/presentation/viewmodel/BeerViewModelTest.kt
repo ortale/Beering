@@ -1,13 +1,9 @@
-package com.example.beering
+package com.example.beering.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.beering.domain.model.Beer
 import com.example.beering.domain.usecases.GetBeerByIdUseCase
 import com.example.beering.domain.usecases.GetBeersUseCase
-import com.example.beering.presentation.viewmodel.BeerDetailState
-import com.example.beering.presentation.viewmodel.BeerListState
-import com.example.beering.presentation.viewmodel.BeerViewModel
-import com.example.beering.presentation.viewmodel.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow

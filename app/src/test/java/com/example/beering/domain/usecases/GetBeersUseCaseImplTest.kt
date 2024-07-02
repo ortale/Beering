@@ -1,9 +1,7 @@
-package com.example.beering
+package com.example.beering.domain.usecases
 
 import com.example.beering.domain.model.Beer
 import com.example.beering.domain.repository.BeerRepository
-import com.example.beering.domain.usecases.GetBeersUseCase
-import com.example.beering.domain.usecases.GetBeersUseCaseImpl
 import com.example.beering.presentation.viewmodel.Result
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
