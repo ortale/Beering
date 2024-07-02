@@ -51,10 +51,6 @@ class BeerViewModel @Inject constructor(
             }
         }
     }
-
-    sealed class UiEvent {
-        data class ShowSnackbar(val message: String) : UiEvent()
-    }
 }
 
 sealed class Result<out T> {
