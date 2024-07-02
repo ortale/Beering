@@ -14,6 +14,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +31,7 @@ import com.example.beering.presentation.viewmodel.BeerViewModel
 
 @Composable
 fun BeerListScreen(navController: NavController, viewModel: BeerViewModel = hiltViewModel()) {
-    val state by viewModel.beerListState
+    val state by viewModel.beerListState.collectAsState()
 
     Surface(
         color = Color.LightGray,

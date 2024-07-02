@@ -1,13 +1,12 @@
 package com.example.beering.presentation.viewmodel
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beering.domain.model.Beer
 import com.example.beering.domain.usecases.GetBeerByIdUseCase
 import com.example.beering.domain.usecases.GetBeersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,11 +16,11 @@ class BeerViewModel @Inject constructor(
     private val getBeerByIdUseCase: GetBeerByIdUseCase
 ) : ViewModel() {
 
-    private val _beerListState = mutableStateOf<BeerListState>(BeerListState.Loading)
-    val beerListState: State<BeerListState> = _beerListState
+    private val _beerListState = MutableStateFlow<BeerListState>(BeerListState.Loading)
+    val beerListState: StateFlow<BeerListState> = _beerListState.asStateFlow()
 
-    private val _beerDetailState = mutableStateOf<BeerDetailState>(BeerDetailState.Loading)
-    val beerDetailState: State<BeerDetailState> = _beerDetailState
+    private val _beerDetailState = MutableStateFlow<BeerDetailState>(BeerDetailState.Loading)
+    val beerDetailState: StateFlow<BeerDetailState> = _beerDetailState.asStateFlow()
 
     init {
         fetchBeers()
@@ -52,6 +51,10 @@ class BeerViewModel @Inject constructor(
             }
         }
     }
+
+    sealed class UiEvent {
+        data class ShowSnackbar(val message: String) : UiEvent()
+    }
 }
 
 sealed class Result<out T> {
@@ -60,7 +63,7 @@ sealed class Result<out T> {
 }
 
 sealed class BeerListState {
-    object Loading : BeerListState()
+    data object Loading : BeerListState()
     data class Success(val beers: List<Beer>) : BeerListState()
     data class Error(val message: String) : BeerListState()
 }
