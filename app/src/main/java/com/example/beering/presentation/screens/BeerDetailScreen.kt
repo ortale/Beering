@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +27,7 @@ fun BeerDetailScreen(beerId: String, viewModel: BeerViewModel = hiltViewModel())
         viewModel.getBeerById(beerId)
     }
 
-    val state by viewModel.beerDetailState
+    val state by viewModel.beerDetailState.collectAsState()
 
     Surface(
         color = Color.White,
