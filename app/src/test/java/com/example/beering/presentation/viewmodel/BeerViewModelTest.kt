@@ -28,14 +28,6 @@ class BeerViewModelTest {
     // Subject under test
     private lateinit var beerViewModel: BeerViewModel
 
-    // Sample data for testing
-    private val testBeerList = listOf(
-        Beer(1, "Beer 1", "Brewery 1", "Type 1"),
-        Beer(2, "Beer 2", "Brewery 2", "Type 2")
-    )
-    private val testBeerId = 1
-    private val testBeer = Beer(1, "Beer 1", "Brewery 1", "Type 1")
-
     @Before
     fun setUp() {
         beerViewModel = BeerViewModel(getBeersUseCase, getBeerByIdUseCase)
@@ -56,7 +48,6 @@ class BeerViewModelTest {
     @Test
     fun `fetchBeers updates beerListState on failure`() = runTest {
         // Prepare
-        val errorMessage = "Error fetching beers"
         `when`(getBeersUseCase.execute()).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
         // Execute
@@ -81,7 +72,6 @@ class BeerViewModelTest {
     @Test
     fun `getBeerById updates beerDetailState on failure`() = runTest {
         // Prepare
-        val errorMessage = "Error fetching beer"
         `when`(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
         // Execute
@@ -89,5 +79,16 @@ class BeerViewModelTest {
 
         // Verify
         assertEquals(BeerDetailState.Error(errorMessage), beerViewModel.beerDetailState.value)
+    }
+
+    companion object {
+        // Sample data for testing
+        private val testBeerList = listOf(
+            Beer(1, "Beer 1", "Brewery 1", "Type 1"),
+            Beer(2, "Beer 2", "Brewery 2", "Type 2")
+        )
+        private const val testBeerId = 1
+        private val testBeer = Beer(1, "Beer 1", "Brewery 1", "Type 1")
+        private const val errorMessage = "Error fetching beers"
     }
 }
