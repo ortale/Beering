@@ -20,20 +20,12 @@ class GetBeersUseCaseImplTest {
 
     private lateinit var getBeersUseCase: GetBeersUseCase
 
-    private val testBeer = Beer(
-        1,
-        "Test Beer",
-        "Test Brewery",
-        "IPA"
-    )
-
     @Before
     fun setUp() {
         getBeersUseCase = GetBeersUseCaseImpl(beerRepository)
     }
 
     // Test cases for GetBeersUseCaseImpl
-
     @Test
     fun `execute should return Flow of Result containing list of beers`() = runBlocking {
         // Prepare
@@ -52,7 +44,6 @@ class GetBeersUseCaseImplTest {
     @Test
     fun `execute should return Flow of Result containing error`() = runBlocking {
         // Prepare
-        val errorMessage = "Error fetching beers"
         `when`(beerRepository.getBeers()).thenReturn(flowOf(Result.Failure(Throwable(errorMessage))))
 
         // Execute
@@ -62,5 +53,15 @@ class GetBeersUseCaseImplTest {
         val result = resultFlow.first() // Blocking call to get the first emitted value
         assertTrue(result is Result.Failure)
         assertEquals(errorMessage, (result as Result.Failure).exception.message)
+    }
+
+    companion object {
+        private val testBeer = Beer(
+            1,
+            "Test Beer",
+            "Test Brewery",
+            "IPA"
+        )
+        private const val errorMessage = "Error fetching beers"
     }
 }

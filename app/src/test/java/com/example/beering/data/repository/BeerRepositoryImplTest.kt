@@ -27,16 +27,6 @@ class BeerRepositoryImplTest {
     private val beerDataSource: BeerDataSource = mockk()
     private lateinit var beerRepository: BeerRepository
 
-    private val testBeerDtoList = listOf(
-        BeerDto(1, "Beer 1", "Brewery 1", "Type 1"),
-        BeerDto(2, "Beer 2", "Brewery 2", "Type 2")
-    )
-    private val testBeerDto = BeerDto(1, "Beer 1", "Brewery 1", "Type 1")
-
-    private val testBeerList = testBeerDtoList.map { it.toDomainModel() }
-    private val testBeer = testBeerDto.toDomainModel()
-    private val testBeerId = 1
-
     @Before
     fun setUp() {
         beerRepository = BeerRepositoryImpl(beerDataSource)
@@ -58,7 +48,6 @@ class BeerRepositoryImplTest {
     @Test
     fun `getBeers returns failure result`() = runTest {
         // Prepare
-        val errorMessage = "Error fetching beers"
         coEvery { beerDataSource.getAllBeers() } throws Exception(errorMessage)
 
         // Execute
@@ -85,7 +74,6 @@ class BeerRepositoryImplTest {
     @Test
     fun `getBeerById returns failure result`() = runTest {
         // Prepare
-        val errorMessage = "Error fetching beer"
         coEvery { beerDataSource.getBeerById(testBeerId) } throws Exception(errorMessage)
 
         // Execute
@@ -94,5 +82,18 @@ class BeerRepositoryImplTest {
         // Verify
         assertTrue(result is Result.Failure)
         assertEquals(errorMessage, (result as Result.Failure).exception.message)
+    }
+
+    companion object {
+        private val testBeerDtoList = listOf(
+            BeerDto(1, "Beer 1", "Brewery 1", "Type 1"),
+            BeerDto(2, "Beer 2", "Brewery 2", "Type 2")
+        )
+        private val testBeerDto = BeerDto(1, "Beer 1", "Brewery 1", "Type 1")
+
+        private val testBeerList = testBeerDtoList.map { it.toDomainModel() }
+        private val testBeer = testBeerDto.toDomainModel()
+        private const val testBeerId = 1
+        private const val errorMessage = "Error fetching beer"
     }
 }
