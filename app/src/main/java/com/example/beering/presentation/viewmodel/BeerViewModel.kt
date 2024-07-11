@@ -23,11 +23,6 @@ class BeerViewModel @Inject constructor(
     private val _beerDetailState = MutableStateFlow<BeerDetailState>(BeerDetailState.Loading)
     val beerDetailState: StateFlow<BeerDetailState> = _beerDetailState.asStateFlow()
 
-    init {
-        fetchBeers()
-    }
-
-    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     fun fetchBeers() {
         viewModelScope.launch {
             getBeersUseCase.execute().collect { result ->

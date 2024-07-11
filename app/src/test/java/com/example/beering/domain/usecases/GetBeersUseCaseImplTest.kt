@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 
 class GetBeersUseCaseImplTest {
 
@@ -38,7 +38,7 @@ class GetBeersUseCaseImplTest {
     fun `execute should return Flow of Result containing list of beers`() = runBlocking {
         // Prepare
         val expectedBeers = listOf(testBeer)
-        whenever(beerRepository.getBeers()).thenReturn(flowOf(Result.Success(expectedBeers)))
+        `when`(beerRepository.getBeers()).thenReturn(flowOf(Result.Success(expectedBeers)))
 
         // Execute
         val resultFlow = getBeersUseCase.execute()
@@ -53,7 +53,7 @@ class GetBeersUseCaseImplTest {
     fun `execute should return Flow of Result containing error`() = runBlocking {
         // Prepare
         val errorMessage = "Error fetching beers"
-        whenever(beerRepository.getBeers()).thenReturn(flowOf(Result.Failure(Throwable(errorMessage))))
+        `when`(beerRepository.getBeers()).thenReturn(flowOf(Result.Failure(Throwable(errorMessage))))
 
         // Execute
         val resultFlow = getBeersUseCase.execute()

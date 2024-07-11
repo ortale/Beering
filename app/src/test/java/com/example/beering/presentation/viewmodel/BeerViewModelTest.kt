@@ -1,27 +1,25 @@
 package com.example.beering.presentation.viewmodel
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.beering.domain.model.Beer
 import com.example.beering.domain.usecases.GetBeerByIdUseCase
 import com.example.beering.domain.usecases.GetBeersUseCase
-import kotlinx.coroutines.Dispatchers
+import com.example.beering.dispatcher_rules.MainDispatcherRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.*
-import org.junit.*
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
+import org.junit.Test
+import org.junit.Rule
 import org.junit.Assert.assertEquals
+import org.mockito.Mockito.`when`
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 
 @ExperimentalCoroutinesApi
 class BeerViewModelTest {
 
     // Set the main coroutines dispatcher for unit testing
     @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule()
-
-    private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(testDispatcher)
+    val mainDispatcherRule = MainDispatcherRule()
 
     // Mock dependencies
     private val getBeersUseCase: GetBeersUseCase = mock()
@@ -40,81 +38,56 @@ class BeerViewModelTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         beerViewModel = BeerViewModel(getBeersUseCase, getBeerByIdUseCase)
     }
 
     @Test
-    fun `fetchBeers updates beerListState on success`() = testScope.runTest {
+    fun `fetchBeers updates beerListState on success`() = runTest {
         // Prepare
-        whenever(getBeersUseCase.execute()).thenReturn(flow {
-            emit(Result.Success(testBeerList))
-        })
+        `when`(getBeersUseCase.execute()).thenReturn(flowOf(Result.Success(testBeerList)))
 
-        try {
-            // Execute
-            beerViewModel.fetchBeers()
+        // Execute
+        beerViewModel.fetchBeers()
 
-            // Verify
-            assertEquals(BeerListState.Success(testBeerList), beerViewModel.beerListState.value)
-        } finally {
-            Dispatchers.resetMain()
-        }
+        // Verify
+        assertEquals(BeerListState.Success(testBeerList), beerViewModel.beerListState.value)
     }
 
     @Test
-    fun `fetchBeers updates beerListState on failure`() = testScope.runTest {
+    fun `fetchBeers updates beerListState on failure`() = runTest {
         // Prepare
         val errorMessage = "Error fetching beers"
-        whenever(getBeersUseCase.execute()).thenReturn(flow {
-            emit(Result.Failure(Exception(errorMessage)))
-        })
+        `when`(getBeersUseCase.execute()).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
-        try {
-            // Execute
-            beerViewModel.fetchBeers()
+        // Execute
+        beerViewModel.fetchBeers()
 
-            // Verify
-            assertEquals(BeerListState.Error(errorMessage), beerViewModel.beerListState.value)
-        } finally {
-            Dispatchers.resetMain()
-        }
+        // Verify
+        assertEquals(BeerListState.Error(errorMessage), beerViewModel.beerListState.value)
     }
 
     @Test
-    fun `getBeerById updates beerDetailState on success`() = testScope.runTest {
+    fun `getBeerById updates beerDetailState on success`() = runTest {
         // Prepare
-        whenever(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flow {
-            emit(Result.Success(testBeer))
-        })
+        `when`(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flowOf(Result.Success(testBeer)))
 
-        try {
-            // Execute
-            beerViewModel.getBeerById(testBeerId)
+        // Execute
+        beerViewModel.getBeerById(testBeerId)
 
-            // Verify
-            assertEquals(BeerDetailState.Success(testBeer), beerViewModel.beerDetailState.value)
-        } finally {
-            Dispatchers.resetMain()
-        }
+        // Verify
+        assertEquals(BeerDetailState.Success(testBeer), beerViewModel.beerDetailState.value)
     }
 
     @Test
-    fun `getBeerById updates beerDetailState on failure`() = testScope.runTest {
+    fun `getBeerById updates beerDetailState on failure`() = runTest {
         // Prepare
         val errorMessage = "Error fetching beer"
-        whenever(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flow {
-            emit(Result.Failure(Exception(errorMessage)))
-        })
+        `when`(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
-        try {
-            // Execute
-            beerViewModel.getBeerById(testBeerId)
+        // Execute
+        beerViewModel.getBeerById(testBeerId)
 
-            // Verify
-            assertEquals(BeerDetailState.Error(errorMessage), beerViewModel.beerDetailState.value)
-        } finally {
-            Dispatchers.resetMain()
-        }
+        // Verify
+        assertEquals(BeerDetailState.Error(errorMessage), beerViewModel.beerDetailState.value)
     }
 }

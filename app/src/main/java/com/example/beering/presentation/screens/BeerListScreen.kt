@@ -33,6 +33,8 @@ import com.example.beering.presentation.viewmodel.BeerViewModel
 fun BeerListScreen(navController: NavController, viewModel: BeerViewModel = hiltViewModel()) {
     val state by viewModel.beerListState.collectAsState()
 
+    viewModel.fetchBeers()
+
     Surface(
         color = Color.LightGray,
         modifier = Modifier.fillMaxSize()

@@ -3,22 +3,26 @@ package com.example.beering.data.repository
 import com.example.beering.data.datasource.BeerDataSource
 import com.example.beering.data.dto.BeerDto
 import com.example.beering.data.dto.toDomainModel
+import com.example.beering.dispatcher_rules.MainDispatcherRule
 import com.example.beering.domain.repository.BeerRepository
 import com.example.beering.presentation.viewmodel.Result
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
+import junit.framework.TestCase.assertTrue
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.*
-import org.junit.*
-import org.junit.Assert.*
+import kotlinx.coroutines.test.runTest
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class BeerRepositoryImplTest {
 
-    private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(testDispatcher)
+    // Set the main coroutines dispatcher for unit testing
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private val beerDataSource: BeerDataSource = mockk()
     private lateinit var beerRepository: BeerRepository
@@ -35,17 +39,11 @@ class BeerRepositoryImplTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(testDispatcher)
         beerRepository = BeerRepositoryImpl(beerDataSource)
     }
 
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
-
     @Test
-    fun `getBeers returns success result`() = testScope.runTest {
+    fun `getBeers returns success result`() = runTest {
         // Prepare
         coEvery { beerDataSource.getAllBeers() } returns testBeerDtoList
 
@@ -58,7 +56,7 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeers returns failure result`() = testScope.runTest {
+    fun `getBeers returns failure result`() = runTest {
         // Prepare
         val errorMessage = "Error fetching beers"
         coEvery { beerDataSource.getAllBeers() } throws Exception(errorMessage)
@@ -72,7 +70,7 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeerById returns success result`() = testScope.runTest {
+    fun `getBeerById returns success result`() = runTest {
         // Prepare
         coEvery { beerDataSource.getBeerById(testBeerId) } returns testBeerDto
 
@@ -85,7 +83,7 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeerById returns failure result`() = testScope.runTest {
+    fun `getBeerById returns failure result`() = runTest {
         // Prepare
         val errorMessage = "Error fetching beer"
         coEvery { beerDataSource.getBeerById(testBeerId) } throws Exception(errorMessage)
