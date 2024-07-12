@@ -34,7 +34,7 @@ class BeerViewModelTest {
     }
 
     @Test
-    fun `fetchBeers updates beerListState on success`() = runTest {
+    fun `Given getBeersUseCase returns a list of beers, When fetchBeers is called, Then beerListState is updated to Success with the list of beers`() = runTest {
         // Prepare
         `when`(getBeersUseCase.execute()).thenReturn(flowOf(Result.Success(testBeerList)))
 
@@ -46,7 +46,7 @@ class BeerViewModelTest {
     }
 
     @Test
-    fun `fetchBeers updates beerListState on failure`() = runTest {
+    fun `Given getBeersUseCase returns an error, When fetchBeers is called, Then beerListState is updated to Error with the error message`() = runTest {
         // Prepare
         `when`(getBeersUseCase.execute()).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
@@ -58,7 +58,7 @@ class BeerViewModelTest {
     }
 
     @Test
-    fun `getBeerById updates beerDetailState on success`() = runTest {
+    fun `Given getBeerByIdUseCase returns a beer, When getBeerById is called with a valid ID, Then beerDetailState is updated to Success with the beer`() = runTest {
         // Prepare
         `when`(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flowOf(Result.Success(testBeer)))
 
@@ -70,7 +70,7 @@ class BeerViewModelTest {
     }
 
     @Test
-    fun `getBeerById updates beerDetailState on failure`() = runTest {
+    fun `Given getBeerByIdUseCase returns an error, When getBeerById is called with a valid ID, Then beerDetailState is updated to Error with the error message`() = runTest {
         // Prepare
         `when`(getBeerByIdUseCase.execute(testBeerId)).thenReturn(flowOf(Result.Failure(Exception(errorMessage))))
 
