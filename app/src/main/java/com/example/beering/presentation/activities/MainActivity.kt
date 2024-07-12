@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.beering.presentation.screens.BeerDetailScreen
 import com.example.beering.presentation.screens.BeerListScreen
+import com.example.beering.presentation.ui.theme.BeeringTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +18,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            NavGraph()
+            BeeringTheme {
+                NavGraph()
+            }
         }
     }
 }

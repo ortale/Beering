@@ -9,11 +9,18 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.example.beering.presentation.ui.ImageSize
+import com.example.beering.presentation.ui.LocalImageSize
+import com.example.beering.presentation.ui.LocalScreenBackground
+import com.example.beering.presentation.ui.LocalSpacing
+import com.example.beering.presentation.ui.ScreenBackground
+import com.example.beering.presentation.ui.Spacing
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -62,9 +69,15 @@ fun BeeringTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing(),
+        LocalImageSize provides ImageSize(),
+        LocalScreenBackground provides ScreenBackground()
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content
+        )
+    }
 }

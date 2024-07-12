@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,14 +19,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.beering.R
 import com.example.beering.domain.model.Beer
+import com.example.beering.presentation.ui.LocalImageSize
+import com.example.beering.presentation.ui.screenBackground
+import com.example.beering.presentation.ui.spacing
 import com.example.beering.presentation.viewmodel.BeerListState
 import com.example.beering.presentation.viewmodel.BeerViewModel
 
@@ -36,14 +38,14 @@ fun BeerListScreen(navController: NavController, viewModel: BeerViewModel = hilt
     viewModel.fetchBeers()
 
     Surface(
-        color = Color.LightGray,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.screenBackground.color
     ) {
         when (state) {
             is BeerListState.Loading -> CircularProgressIndicator()
             is BeerListState.Success -> {
                 LazyColumn(
-                    contentPadding = PaddingValues(16.dp)
+                    contentPadding = PaddingValues(MaterialTheme.spacing.medium)
                 ) {
                     items((state as BeerListState.Success).beers) { beer ->
                         BeerListItem(beer) {
@@ -63,17 +65,17 @@ fun BeerListItem(beer: Beer, onClick: () -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .padding(vertical = 8.dp, horizontal = 16.dp),
+            .padding(vertical = MaterialTheme.spacing.small, horizontal = MaterialTheme.spacing.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = beer.imageUrl,
             contentDescription = null,
             error = painterResource(R.drawable.ic_launcher_foreground),
-            modifier = Modifier.size(64.dp)
+            modifier = Modifier.size(LocalImageSize.current.small)
         )
         Column(
-            modifier = Modifier.padding(start = 16.dp)
+            modifier = Modifier.padding(start = MaterialTheme.spacing.medium)
         ) {
             Text(text = beer.name)
         }
