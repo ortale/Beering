@@ -33,20 +33,20 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeers returns success result`() = runTest {
-        // Prepare
+    fun `Given beer data source returns a list of beers, When getBeers is called, Then it returns a success result with the list of beers`() = runTest {
+        // Given
         coEvery { beerDataSource.getAllBeers() } returns testBeerDtoList
 
-        // Execute
+        // When
         val result = beerRepository.getBeers().first()
 
-        // Verify
+        // Then
         assertTrue(result is Result.Success)
         assertEquals(testBeerList, (result as Result.Success).data)
     }
 
     @Test
-    fun `getBeers returns failure result`() = runTest {
+    fun `Given beer data source throws an exception, When getBeers is called, Then it returns a failure result with the error message`() = runTest {
         // Prepare
         coEvery { beerDataSource.getAllBeers() } throws Exception(errorMessage)
 
@@ -59,7 +59,7 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeerById returns success result`() = runTest {
+    fun `Given beer data source returns a beer, When getBeerById is called with a valid ID, Then it returns a success result with the beer`() = runTest {
         // Prepare
         coEvery { beerDataSource.getBeerById(testBeerId) } returns testBeerDto
 
@@ -72,7 +72,7 @@ class BeerRepositoryImplTest {
     }
 
     @Test
-    fun `getBeerById returns failure result`() = runTest {
+    fun `Given beer data source throws an exception, When getBeerById is called with a valid ID, Then it returns a failure result with the error message`() = runTest {
         // Prepare
         coEvery { beerDataSource.getBeerById(testBeerId) } throws Exception(errorMessage)
 

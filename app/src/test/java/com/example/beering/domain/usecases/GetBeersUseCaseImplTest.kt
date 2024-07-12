@@ -27,7 +27,7 @@ class GetBeersUseCaseImplTest {
 
     // Test cases for GetBeersUseCaseImpl
     @Test
-    fun `execute should return Flow of Result containing list of beers`() = runBlocking {
+    fun `Given beer repository returns a list of beers, When execute is called, Then it returns a first item of a Flow of Result`() = runBlocking {
         // Prepare
         val expectedBeers = listOf(testBeer)
         `when`(beerRepository.getBeers()).thenReturn(flowOf(Result.Success(expectedBeers)))
@@ -42,7 +42,7 @@ class GetBeersUseCaseImplTest {
     }
 
     @Test
-    fun `execute should return Flow of Result containing error`() = runBlocking {
+    fun `Given beer repository returns an error, When execute is called, Then it returns a first error of a Flow of Result`() = runBlocking {
         // Prepare
         `when`(beerRepository.getBeers()).thenReturn(flowOf(Result.Failure(Throwable(errorMessage))))
 
