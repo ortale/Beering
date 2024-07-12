@@ -15,7 +15,7 @@ buildscript {
 }
 extra.apply {
     set("FLAVOR_DIMENSION", "mode")
-    set("DEV_API_URL", "http://192.168.1.115:5002")
+    set("DEV_API_URL", "http://159.65.21.221:5002")
     set("DEV_APP_LABEL", "Beering-Dev")
     set("DEV_APP_ICON", "@mipmap/ic_launcher")
 
